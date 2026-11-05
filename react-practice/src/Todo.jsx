@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './App.css'
 import { InputTodo } from './components/inputTodo';
+import { InCompleteTodo } from './components/inCompleteTodo';
+import { CompleteTodo } from './components/completeTodo';
 
 export const Todo = () => {
   const [todoText, setTodoText] = useState("");
@@ -39,8 +41,8 @@ export const Todo = () => {
     newCompleteTodos.splice(index, 1);
     const newIncompleteTodos = [...incompleteTodos, completeTodos[index]];
 
-    setCompleteTodos(completeTodos);
-    setIncompleteTodos(incompleteTodos);
+    setCompleteTodos(newCompleteTodos);
+    setIncompleteTodos(newIncompleteTodos);
   }
 
   return (
@@ -50,36 +52,17 @@ export const Todo = () => {
         onChange={onChangeSetTodoText} 
         onClickAdd={onClickAddTodo}
       />
-      <div className="incomplete-area">
-        <p>未完了のTodo</p>
-        <ul>
-          {incompleteTodos.map((todo, index) => (
-              <li key={todo}>
-                <div className="list-row">
-                  <p>{todo}</p>
-                  <button onClick={() => onClickCompleteTodo(index)}>完了</button>
-                  <button onClick={() => onClickDeleteTodo(index)}>削除</button>
-                </div>
-              </li>
-            )
-          )}
-        </ul>
-      </div>
-        
-      <div className="complete-area">
-        <p>完了のTodo</p>
-          <ul>
-            {completeTodos.map((todo, index) => (
-              <li key={todo}>
-                <div className="list-row">
-                  <p>{todo}</p>
-                  <button onClick={() => onClickBackTodo(index)}>戻す</button>
-                </div>
-              </li>
-              )
-            )}
-          </ul>
-      </div>  
+     
+     <InCompleteTodo 
+      incompleteTodos={incompleteTodos}
+      onClickCompleteTodo={onClickCompleteTodo}
+      onClickDeleteTodo={onClickDeleteTodo}
+     />
+
+      <CompleteTodo
+        completeTodos={completeTodos}
+        onClickBackTodo={onClickBackTodo}
+      />
     </>
   )
 }
