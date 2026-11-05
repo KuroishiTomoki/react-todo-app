@@ -28,6 +28,7 @@ export const Todo = () => {
 
     setIncompleteTodos(newIncompleteTodos);
     setCompleteTodos(newCompleteTodos);
+
   }
 
   const onClickDeleteTodo = (index) => {
@@ -45,13 +46,18 @@ export const Todo = () => {
     setIncompleteTodos(newIncompleteTodos);
   }
 
+  const checkDisabled = () => incompleteTodos.length >= 5;
+
   return (
     <>
       <InputTodo 
         todoText={todoText} 
         onChange={onChangeSetTodoText} 
         onClickAdd={onClickAddTodo}
+        disabled={checkDisabled()}
       />
+
+      {checkDisabled() && <p style={{color: "red"}}>登録できるTODOは5個までです</p>}
      
      <InCompleteTodo 
       incompleteTodos={incompleteTodos}
